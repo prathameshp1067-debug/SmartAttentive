@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Teacher · Smart Attendance System{% endblock %}
+{% block content %}
+<section class="stats">
+  <div class="card stat"><h3>CCTV status</h3><div id="cctvState" class="stat-value muted">Checking…</div><small id="cctvIp" class="muted"></small></div>
+  <div class="card stat"><h3>Active session</h3><div id="sessState" class="stat-value bad">Inactive</div><small id="sessSub" class="muted">No active class</small></div>
+  <div class="card stat"><h3>Present (current session)</h3><div id="presentCount" class="stat-value accent">0</div><small class="muted">Recorded by CCTV</small></div>
+  <div class="card stat"><h3>Absent (current session)</h3><div id="absentCount" class="stat-value bad">0</div><small class="muted">Not yet detected</small></div>
+  <div class="card stat"><h3>Total enrolled</h3><div id="enrolled" class="stat-value">0</div><small class="muted">Students with face data</small></div>
+</section>
+
+<section class="two-col">
+  <div class="card">
+    <div class="card-head"><h2>Live CCTV preview</h2><span id="feedBadge" class="badge">Connecting…</span></div>
+    <div class="video"><img id="feed" alt="Live camera preview"></div>
+    <hr>
+    <h3 class="sub">Classroom session control</h3>
+    <div class="row">
+      <input id="subject" placeholder="Subject name (e.g. CS101)" maxlength="60">
+      <button id="startBtn" class="btn btn-success">Start new session</button>
+      <button id="endBtn" class="btn btn-danger" hidden>End session</button>
+    </div>
+    <div id="sessMsg" class="alert" hidden></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>Live session attendance log</h2>
+      <button id="openAdd" class="btn btn-outline">+ Add student dataset</button></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Student ID</th><th>Name</th><th>Entry time</th><th>Status</th></tr></thead>
+        <tbody id="logBody"><tr><td colspan="4" class="empty">No session active. Enter a subject and start a session to begin recording.</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <div class="card-head"><h2>Absent students <span id="absentTotal" class="muted"></span></h2></div>
+    <ul id="absentList" class="absent-list">
+      <li class="empty">Start a session to see absent students.</li>
+    </ul>
+  </div>
+</section>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-card card">
+    <div class="card-head"><h2>Add student dataset</h2><button id="closeAdd" class="btn btn-outline" type="button">Close</button></div>
+    <form id="addForm" class="grid2">
+      <label>Student ID *<input name="student_id" required></label>
+      <label>Full name *<input name="name" required></label>
+      <label>Department<input name="department"></label>
+      <label>Year<input name="year"></label>
+      <label>Division<input name="division"></label>
+      <label>Roll number<input name="roll_number"></label>
+      <label>Email (optional)<input name="email" type="email"></label>
+      <label>Login password (blank = student ID)<input name="password" type="password"></label>
+      <label class="span2">Face photos (1–5 clear photos, one face each)
+        <input name="photos" type="file" accept="image/*" multiple></label>
+      <label class="span2 check"><input name="use_cctv" type="checkbox" value="1"> Also capture a photo from the CCTV camera now (student stands in front of it)</label>
+      <div class="span2"><button class="btn btn-primary" type="submit">Save student</button></div>
+      <div id="addMsg" class="alert span2" hidden></div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/teacher.js') }}"></script>{% endblock %}

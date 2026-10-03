@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Log in · Smart Attendance System{% endblock %}
+{% block content %}
+<div class="login-box card">
+  <h1>Smart Attendance System</h1>
+  <p class="muted">Log in with your username and password.</p>
+  {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+  <form method="post" class="stack">
+    <label>Username
+      <input name="username" autocomplete="username" required autofocus>
+    </label>
+    <label>Password
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <button class="btn btn-primary" type="submit">Log in</button>
+  </form>
+</div>
+{% endblock %}

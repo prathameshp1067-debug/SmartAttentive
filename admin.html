@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Admin · Smart Attendance System{% endblock %}
+{% block content %}
+<section class="stats">
+  <div class="card stat"><h3>Students</h3><div id="sStudents" class="stat-value">0</div><small class="muted">With face data</small></div>
+  <div class="card stat"><h3>Teachers</h3><div id="sTeachers" class="stat-value">0</div><small class="muted">Staff accounts</small></div>
+  <div class="card stat"><h3>Sessions held</h3><div id="sSessions" class="stat-value">0</div><small class="muted">All time</small></div>
+</section>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="teachers">Teachers</button>
+  <button class="tab" data-tab="students">Students</button>
+  <button class="tab" data-tab="attendance">Attendance</button>
+</nav>
+
+<section id="tab-teachers" class="card">
+  <h2>Add teacher</h2>
+  <form id="teacherForm" class="grid2">
+    <label>Username *<input name="username" required></label>
+    <label>Full name *<input name="name" required></label>
+    <label>Password * (min 6)<input name="password" type="password" minlength="6" required></label>
+    <label>Email (optional)<input name="email" type="email"></label>
+    <div class="span2"><button class="btn btn-primary" type="submit">Add teacher</button></div>
+    <div id="teacherMsg" class="alert span2" hidden></div>
+  </form>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Username</th><th>Name</th><th>Email</th><th></th></tr></thead>
+    <tbody id="teacherBody"></tbody></table></div>
+</section>
+
+<section id="tab-students" class="card" hidden>
+  <h2>Enrolled students</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Student ID</th><th>Name</th><th>Department</th><th>Year</th><th>Division</th><th>Roll</th><th>Photos</th><th></th></tr></thead>
+    <tbody id="studentBody"></tbody></table></div>
+</section>
+
+<section id="tab-attendance" class="card" hidden>
+  <div class="card-head"><h2>Attendance records</h2><a id="exportLink" class="btn btn-outline" href="/api/attendance/export">Download Excel</a></div>
+  <div class="row filters">
+    <select id="fSession"><option value="">All sessions</option></select>
+    <input id="fDate" type="date">
+    <input id="fStudent" placeholder="Student ID">
+    <button id="applyFilter" class="btn btn-primary">Apply</button>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Date</th><th>Subject</th><th>Student ID</th><th>Name</th><th>Entry</th><th>Exit</th><th>Minutes</th></tr></thead>
+    <tbody id="attBody"></tbody></table></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>{% endblock %}

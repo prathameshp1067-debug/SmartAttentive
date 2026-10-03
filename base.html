@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Smart Attendance System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% if session.get('user') %}
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <div class="brand">Smart Attendance System</div>
+    <div class="topbar-right">
+      <span class="chip">{{ session['user']['name'] }} ({{ session['user']['role']|capitalize }})</span>
+      <a class="btn btn-danger" href="{{ url_for('pages.logout') }}">Log out</a>
+    </div>
+  </div>
+</header>
+{% endif %}
+<main class="wrap">
+  {% block content %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>
